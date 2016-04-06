@@ -1,0 +1,2 @@
+﻿  main.cpp
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(61): error C4700: использована неинициализированная локальная переменная "event"
