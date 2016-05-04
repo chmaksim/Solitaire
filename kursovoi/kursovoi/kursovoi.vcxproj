@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F68FC421-4A10-4575-99D5-61DD9F0584A8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
