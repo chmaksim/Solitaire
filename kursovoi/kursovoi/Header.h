@@ -1,3 +1,288 @@
+Type
+
+PEl = ^TEl;
+
+TEl = record
+Key : TKey;
+Y: integer;
+L, R : PEl;
+end;
+Инициализация дерева :
+//Без комментариев
+
+procedure Init(var root : PEl);
+begin
+root : = nil;
+end;
+Добавление элемента.Алгоритм следующий : найдем то поддерево, у которого он будет корнем.Процедурой Split разделим это поддерево в соответствии с ключом нового корня и сразу же подвесим все, куда необходимо.Код лучше читать снизу вверх.
+//Процедура Split разбирает все дерево с корнем в pt
+//в соответствии с ключом key и вешает к pR и pL
+procedure Split(pt : PEl; key: TKey; var pL, pR : PEl);
+begin
+if pt = nil then
+begin
+//разбор пустого дерева
+pL : = nil;
+pR: = nil;
+end
+else
+//Здесь смотрится, куда отнести корень и соответственно   вызывается
+//опять процедура Split
+if pt^.key < key then
+	begin
+	pL : = pt;
+Split(pL^.R, key, pL^.R, pR);
+end
+else
+begin
+pR : = pt;
+Split(pR^.L, key, pL, pR^.L);
+end;
+end;
+
+procedure Add1(var p : PEl; var np : PEl);
+//p – ссылка на корень поддерева, к которому идет добавление
+//np – ссылка на новый элемент
+begin
+if p = nil then
+//Добавление к пустому поддереву
+p : = np
+else
+if np^.y < p^.y then
+	//Если приоритет корня еще больше приоритета новой вершины, идем
+	//дальше по дереву
+	if np^.key = p^.key then
+		exit
+	else
+		if np^.key < p^.key then
+			Add1(p^.L, np)
+		else
+			Add1(p^.R, np)
+else
+begin
+//Подвесим к новой вешнине все необходимое поддерево
+Split(p, np^.key, np^.L, np^.R);
+//И привесим эту вершину вместо поддерева
+p: = np;
+end;
+end;
+
+procedure Add(var root : PEl; const a : TKey);
+
+// root – корень дерева, a – значение нового ключа
+
+var
+np : PEl;
+begin
+
+//Создание вершины
+
+new(np);
+np^.key : = a;
+np^.y : = Random(maxRand);
+np^.L : = nil;
+np^.R : = nil;
+
+//Вызов непосредственно процедуры добавления
+
+Add1(root, np);
+end;
+
+//Функция возвращает указатель на искомый элемент или nil, если его нет
+
+function Search(var p : PEl; const A : TKey) : PEl;
+begin
+if p = nil then
+result : = nil
+else
+if A = p^.key then
+result : = P
+else
+if A < p^.key then
+	result : = Search(p^.L, A)
+else
+result : = Search(p^.R, A)
+	end;
+
+Процедура удаления находит этот элемент в дереве и удаляет его.Затем два его поддерева подвешиваются к ее родителю.
+
+//Процедура подвешивает к p поддеревья pL и pR
+procedure Merge(var p : PEl; pL, pR : PEl);
+begin
+//Елси одно из поддеревьев пусто, то подвешиваем другое
+if pL = nil then
+p : = pR
+else
+if pR = nil then
+p : = pL
+else
+// Смотрим по приоритету
+if pL^.y > pR^.y then
+begin
+p : = pL;
+Merge(p^.R, p^.R, pR);
+end
+else
+begin
+p : = pR;
+Merge(p^.L, pL, p^.L);
+end
+end;
+
+procedure Delete(var p : PEl; const A : TKey);
+begin
+if p = nil then
+Writeln('No such element')
+else
+if A = p^.key then
+//Найден элемент
+Merge(p, p^.L, p^.R)
+//Поиск элемента
+else
+if A < p^.key then
+	Delete(p^.L, A)
+else
+Delete(p^.R, A)
+end;
+
+
+/*if (event.type == Event::MouseButtonPressed)
+{
+x1 = mousePos.x;
+y1 = mousePos.y;
+if ((x1 > 10) && (x1 < 82) && (y1 > 10) && (y1 < 110))
+{
+a = e;
+e--;
+}
+}
+
+if (event.type == Event::MouseButtonPressed)
+{
+
+printf("%d", numbersClick);
+
+if (numbersClick % 2 == 1)
+{
+x1 = mousePos.x;
+y1 = mousePos.y;
+
+if (((x1 - 9) / 100) == ((x1 + 17) / 100))
+{
+b1 = x1 / 100;
+printf("%d", b1);
+
+for (int i = 0; i < 13; i++)
+{
+if (st[i][b1].second == karta.second)
+{
+c1 = i;
+break;
+}
+}
+printf("%d", c1);
+if (c1 != 0)
+{
+if ((y1 < 250 + c1 * 23) && (y1 > 150 + c1 * 23))
+{
+if (st[c1 - 1][b1].second.first != shirt.second.first)
+{
+st[c1 - 1][b1].first.setColor(Color::Yellow);
+bb = 1;
+numbersClick++;
+}
+} else
+if ((y1 < ((c1-1)*23+150)) && (y1 > 150))
+{
+d1 = (y1 - 150) /23;
+if (st[d1][b1].second.first != shirt.second.first)
+{
+printf("\n%d", d1);
+st[d1][b1].first.setColor(Color::Yellow);
+bb = 1;
+numbersClick++;
+}
+}
+}
+}
+}
+else
+x2 = mousePos.x;
+y2 = mousePos.y;
+
+if ((x1 == x2) && (y1 == y2))
+{
+if (((x2 - 9) / 100) == ((x2 + 17) / 100))
+{
+b2 = x2 / 100;
+printf("%d", b2);
+
+for (int i = 0; i < 20; i++)
+{
+if (st[i][b2].second == karta.second)
+{
+c2 = i;
+break;
+}
+}
+printf("%d", c2);
+if (c2 != 0)
+{
+if ((y2 < 250 + c2 * 23) && (y2 > 150 + c2 * 23))
+{
+st[c2 - 1][b2].first.setColor(Color::White);
+numbersClick++;
+}
+else
+if ((y2 < ((c2 - 1) * 23 + 150)) && (y2 > 150))
+{
+d2 = (y2 - 150) / 23;
+printf("\n%d", d2);
+st[d2][b2].first.setColor(Color::White);
+numbersClick++;
+}
+}
+}
+} else
+if (((x2 - 9) / 100) == ((x2 + 17) / 100))
+{
+b2 = x2 / 100;
+printf("%d", b2);
+
+for (int i = 0; i < 20; i++)
+{
+if (st[i][b2].second == karta.second)
+{
+c2 = i;
+break;
+}
+}
+for (int i = 0; i < c1 - d1; i++)
+{
+st[c2 + i][b2] = st[d1 + i][b1];
+}
+
+
+}
+
+}
+
+printf("\n%d\n", y1);
+printf("\n%d\n", x1);*/\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 empty.setPosition(10, 150);
 window.draw(empty);
 card[24].setPosition(10, 130 + 1 * 20);
@@ -74,7 +359,186 @@ window.draw(card[51]);
 
 
 
+/*for (int i = 0; i < 13; i++)
+{
+if (i == 0)
+{
+st1[i] = card[24];
+}
+else
+st1[i] = karta;
+st1[i].setPosition(10, 150 + i * 20);
+window.draw(st1[i]);
+}
 
+for (int i = 0; i < 13; i++)
+{
+if (i == 1)
+{
+st2[i] = card[25];
+}
+else if (i < 1)
+{
+st2[i] = shirt;
+}
+else
+st2[i] = karta;
+st2[i].setPosition(110, 150 + i * 20);
+window.draw(st2[i]);
+}
+
+for (int i = 0; i < 13; i++)
+{
+if (i == 2)
+{
+st3[i] = card[27];
+}
+else if (i < 2)
+{
+st3[i] = shirt;
+}
+else
+st3[i] = karta;
+st3[i].setPosition(210, 150 + i * 20);
+window.draw(st3[i]);
+}
+
+for (int i = 0; i < 13; i++)
+{
+if (i == 3)
+{
+st4[i] = card[30];
+}
+else if (i < 3)
+{
+st4[i] = shirt;
+}
+else
+st4[i] = karta;
+st4[i].setPosition(310, 150 + i * 20);
+window.draw(st4[i]);
+}
+
+for (int i = 0; i < 13; i++)
+{
+if (i == 4)
+{
+st5[i] = card[34];
+}
+else if (i < 4)
+{
+st5[i] = shirt;
+}
+else
+st5[i] = karta;
+st5[i].setPosition(410, 150 + i * 20);
+window.draw(st5[i]);
+}
+
+for (int i = 0; i < 13; i++)
+{
+if (i == 5)
+{
+st6[i] = card[40];
+}
+else if (i < 5)
+{
+st6[i] = shirt;
+}
+else
+st6[i] = karta;
+st6[i].setPosition(510, 150 + i * 20);
+window.draw(st6[i]);
+}
+
+for (int i = 0; i < 13; i++)
+{
+if (i == 6)
+{
+st7[i] = card[46];
+}
+else if (i < 6)
+{
+st7[i] = shirt;
+}
+else
+st7[i] = karta;
+st7[i].setPosition(610, 150 + i * 20);
+window.draw(st7[i]);
+}*/
+
+//if (event.type == Event::MouseButtonReleased)
+//{
+//	/*if (numbersClick % 2 == 1)
+//	{*/
+//		x1 = mousePos.x;
+//		y1 = mousePos.y;
+
+//	/*}
+//	else
+//	{
+//		x2 = mousePos.x;
+//		y2 = mousePos.y;
+//	}
+//	*//*
+//		if ((x1 > 100+10) && (x1 < i*100+82) && (y1 > i*200+150) && (y1 < i*200+250))
+//		{*/
+//			/*if (numbersClick % 2 == 1)
+//			{
+//				x1 = mousePos.x;
+//				y1 = mousePos.y;
+//			}
+//			else
+//			{
+//				x2 = mousePos.x;
+//				y2 = mousePos.y;
+//			}*/
+//	/*	b = ((y1 - 150) / 200);
+//		bb = ((x1 - 10) / 100);
+//		if (b == bb)
+//		{
+//			switch (bb)
+//			{
+//			case 0:
+//			{
+//				card[24].setColor(Color::Yellow);
+//			}
+//			case 1:
+//			{
+//				card[25].setColor(Color::Yellow);
+//			}
+//			case 2:
+//			{
+//				card[27].setColor(Color::Yellow);
+//			}
+//			case 3:
+//			{
+//				card[30].setColor(Color::Yellow);
+//			}
+//			case 4:
+//			{
+//				card[34].setColor(Color::Yellow);
+//			}
+//			case 5:
+//			{
+//				card[40].setColor(Color::Yellow);
+//			}
+//			case 6:
+//			{
+//				card[46].setColor(Color::Yellow);
+//			}
+//			}
+//		}*/
+//			/*	if ((x2 > 110) && (x2 < 182) && (y2 > 350) && (y2 < 450))
+//			{
+//				
+//			}*/
+
+//		/*}*/
+////	}
+//	printf("%d\n", numbersClick);
+//	numbersClick++;
+//}
 
 
 
@@ -552,8 +1016,8 @@ while (window.pollEvent(event))
 							x2 = mousePos1.x;
 							y2 = mousePos1.y;
 						}
-						x1q = (x1 - 25) / 75;
-						y1q = (y1 - 25) / 75;
+						
+
 						x2q = (x2 - 25) / 75;
 						y2q = (y2 - 25) / 75;
 						if (((arrays[y1q][x1q].second.first != Nill.second.first) && (arrays[y1q][x1q].second.second == "White") && ((numbersClick % 4 == 1) || (numbersClick % 4 == 2))) || ((arrays[y1q][x1q].second.first != Nill.second.first) && (arrays[y1q][x1q].second.second == "Black") && ((numbersClick % 4 == 3) || (numbersClick % 4 == 0))))
@@ -747,3 +1211,909 @@ while (window.pollEvent(event))
 			}
 			return 0;
 		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include <SFML/Graphics.hpp>
+#include <stdio.h>
+#include <cmath>
+
+using namespace std;
+using namespace sf;
+
+const int pr = 100;
+
+Sprite add(string str)
+{
+	Image *image = new Image();
+	Texture *texture = new Texture();
+	Sprite *sprite = new Sprite();
+	image->loadFromFile(str);
+	texture->loadFromImage(*image);
+	sprite->setTexture(*texture);
+	return *sprite;
+}
+
+
+/*bool check_kill_white(int x1q, int x2q, int y1q, int y2q, pair<Sprite, String> checkers[10][10])
+{
+String b = "black_checker";
+String w = "white_checker";
+String n = "null";
+String bq = "black_queen";
+String wq = "white_queen";
+if (checkers[x2q][y2q].second == n && checkers[abs(x2q - x1q)][abs(y2q - y1q)].second == b && abs(x2q - x1q) == abs(y2q - y1q) == 2)
+return true;
+else
+return false;
+}*/
+bool check_quin(int y1, int x1, int y2, int x2)
+{
+	if (abs(y1 - y2) == abs(x1 - x2))
+		return true;
+	else
+		return false;
+}
+
+bool check_white_step(int x1q, int y1q, int x2q, int y2q)
+{
+	if (abs(x1q - x2q) == 1 && y2q == y1q - 1)
+		return true;
+	else
+		return false;
+}
+bool check_black_step(int x1q, int y1q, int x2q, int y2q)
+{
+	if (abs(x1q - x2q) == 1 && y1q == y2q - 1)
+		return true;
+	else
+		return false;
+}
+
+int main()
+{
+	RenderWindow window(sf::VideoMode(9 * pr, 9 * pr), "Checkers", Style::Close);
+	Font font;
+	font.loadFromFile("Nautilus.otf");
+	Text text("", font, 40);
+	text.setColor(Color::Yellow);
+
+	String arrL[8] = { "A","B","C","D","E","F","G","H" };
+	String arrN[8] = { "1","2","3","4","5","6","7","8" };
+
+	Sprite background = add("images/background.png");
+	Sprite black_square = add("images/black_square.png");
+	Sprite white_square = add("images/white_square.png");
+	Sprite field[9][9];
+	for (int i = 1; i < 9; i++)
+	{
+		for (int j = 1; j < 9; j++)
+		{
+			if ((i + j) % 2 == 0)
+			{
+				white_square.setPosition((float)i*pr - 50, (float)j*pr - 50);
+				field[i][j] = white_square;
+			}
+			else
+			{
+				black_square.setPosition((float)i*pr - 50, (float)j*pr - 50);
+				field[i][j] = black_square;
+			}
+		}
+	}
+
+
+	Sprite black_checker = add("images/black_checker.png");
+	Sprite white_checker = add("images/white_checker.png");
+	Sprite null = add("images/null.png");
+	Sprite black_queen = add("images/black_queen.png");
+	Sprite white_queen = add("images/white_queen.png");
+	Sprite black_is_win = add("images/black_is_win.png");
+	Sprite white_is_win = add("images/white_is_win.png");
+	Sprite backgr = add("images/bckgr.png");
+
+	String b = "black_checker";
+	String w = "white_checker";
+	String n = "null";
+	String q = "queen";
+	String blackf = "black";
+	String whitef = "white";
+
+	pair<String, String> colorWq(w, q);
+	pair<String, String> colorBq(b, q);
+	pair<String, String> colorW(w, w);
+	pair<String, String> colorB(b, b);
+	pair<String, String>  nl(n, n);
+
+	pair<Sprite, pair<String, String>> black(black_checker, colorB);
+	pair<Sprite, pair<String, String>> white(white_checker, colorW);
+	pair<Sprite, pair<String, String>> nill(null, nl);
+	pair<Sprite, pair<String, String>> black_q(black_queen, colorBq);
+	pair<Sprite, pair<String, string>> white_q(white_queen, colorWq);
+
+	pair<Sprite, pair<String, String>> checkers[10][10];
+	for (int i = 1; i < 9; i++)
+	{
+		for (int j = 1; j < 4; j++)
+		{
+			if ((i + j) % 2 == 1)
+			{
+				black_checker.setPosition((float)i*pr - 50, (float)j*pr - 50);
+				checkers[i][j].first = black_checker;
+				checkers[i][j].second.first = b;
+			}
+			else
+			{
+				null.setPosition((float)i*pr, (float)j*pr);
+				checkers[i][j].first = null;
+				checkers[i][j].second.first = n;
+			}
+		}
+		for (int j = 4; j < 6; j++)
+		{
+			null.setPosition((float)i*pr, (float)j*pr);
+			checkers[i][j].first = null;
+			checkers[i][j].second.first = n;
+		}
+		for (int j = 6; j < 9; j++)
+		{
+			if ((i + j) % 2 == 1)
+			{
+				white_checker.setPosition((float)i*pr - 50, (float)j*pr - 50);
+				checkers[i][j].first = white_checker;
+				checkers[i][j].second.first = w;
+			}
+			else
+			{
+				null.setPosition((float)i*pr, (float)j*pr);
+				checkers[i][j].first = null;
+				checkers[i][j].second.first = n;
+			}
+		}
+	}
+
+	int click = 1;
+	int a = 0;
+	int x1 = 0;
+	int y1 = 0;
+
+	int x2 = 0;
+	int y2 = 0;
+
+	int schW = 0;
+	int schB = 0;
+	int x1q = 0, x2q = 0, y1q = 0, y2q = 0;
+	while (window.isOpen())
+	{
+		window.setFramerateLimit(60);
+		schW = 0;
+		schB = 0;
+
+		for (int i = 1; i < 9; i++)
+		{
+			for (int j = 1; j < 9; j++)
+			{
+				if (checkers[i][j].second.first == w || checkers[i][j].second.second == q && checkers[i][j].second.first == w)
+					schW++;
+				if (checkers[i][j].second.first == b || checkers[i][j].second.second == q && checkers[i][j].second.first == b)
+					schB++;
+			}
+		}
+		if (schB == 0)
+		{
+			window.draw(backgr);
+			white_is_win.setPosition(0, 200);
+			window.draw(white_is_win);
+		}
+		if (schW == 0)
+		{
+			window.draw(backgr);
+			window.draw(black_is_win);
+		}
+		window.display();
+		Vector2i pixelPos = Mouse::getPosition(window);
+
+		Event event;
+
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::MouseButtonPressed)
+			{
+				if (pixelPos.x > 50 && pixelPos.x < 850 && pixelPos.y < 850 && pixelPos.y>50)
+				{
+					if (click % 2 == 1)
+					{
+						x1 = pixelPos.x;
+						y1 = pixelPos.y;
+					}
+					else
+					{
+						x2 = pixelPos.x;
+						y2 = pixelPos.y;
+					}
+
+					x1q = (x1 - 50) / 100 + 1;
+					y1q = (y1 - 50) / 100 + 1;
+
+					x2q = (x2 - 50) / 100 + 1;
+					y2q = (y2 - 50) / 100 + 1;
+				}
+				if (((checkers[x1q][y1q].second.first != n) && ((checkers[x1q][y1q].second.first == w) || (checkers[x1q][y1q].second.first == q)) && ((click % 4 == 1) || (click % 4 == 2))) || ((checkers[x1q][y1q].second.first != n) && (checkers[x1q][y1q].second.first == b || checkers[x1q][y1q].second.first == q) && ((click % 4 == 3) || (click % 4 == 0))))  //( (click % 4 == 1 && (checkers[x1q][y1q].second == w) && checkers[x2q][y2q].second == w) ||  (click % 4 == 1 && (checkers[x1q][y1q].second == w)) || ( (click % 4 == 2) && (checkers[x1q][y1q].second == w) ) || (click % 4 == 3 && (checkers[x1q][y1q].second == b)) || (click % 4 == 0 && checkers[x1q][y1q].second == b) )
+				{
+					if (event.key.code == Mouse::Left)
+					{
+						a = click % 2;
+						printf(" %d %d %d %d \n", click, pixelPos.x, pixelPos.y, a);
+
+						checkers[x1q][y1q].first.setColor(Color::Red);
+
+						if (click % 2 == 0)
+						{
+
+							if (checkers[x2q][y2q].second.first == checkers[x1q][y1q].second.first)
+							{
+								x1 = x2;
+								y1 = y2;
+								checkers[x1q][y1q].first.setColor(Color::White);
+								checkers[x2q][y2q].first.setColor(Color::Red);
+								click--;
+							}
+							if (checkers[x2q][y2q].second.first != n && (checkers[x1q][y1q].second.first == w &&  checkers[x2q][y2q].second.first == b) || (checkers[x1q][y1q].second.first == b &&  checkers[x2q][y2q].second.first == w))
+								click--;
+							if (checkers[x2q][y2q].second.first == n)
+							{
+								if (checkers[x1q][y1q].second.first == w)
+								{
+									if (checkers[x1q - 1][y1q - 1].second.first == b && checkers[x1q - 2][y1q - 2].second.first == n && x2q == x1q - 2 && y2q == y1q - 2 && checkers[x1q][y1q].second.second != q)
+									{
+
+										checkers[x1q - 1][y1q - 1] = nill;
+										white.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = white;
+										checkers[x1q][y1q] = nill;
+										if (y2q == 1)
+										{
+											white_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+											checkers[x2q][y2q] = white_q;
+										}
+										click++;
+									}
+									if (checkers[x1q + 1][y1q - 1].second.first == b && checkers[x1q + 2][y1q - 2].second.first == n && x2q == x1q + 2 && y2q == y1q - 2 && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x2q - 1][y2q + 1] = nill;
+										white.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = white;
+										checkers[x1q][y1q] = nill;
+										if (y2q == 1)
+										{
+											white_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+											checkers[x2q][y2q] = white_q;
+										}
+										click++;
+									}
+									if (checkers[x1q - 1][y1q + 1].second.first == b && checkers[x1q - 2][y1q + 2].second.first == n && x2q == x1q - 2 && y2q == y1q + 2 && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q - 1][y1q + 1] = nill;
+										white.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = white;
+										checkers[x1q][y1q] = nill;
+										click++;
+									}
+									if (checkers[x1q + 1][y1q + 1].second.first == b && checkers[x1q + 2][y1q + 2].second.first == n && x2q == x1q + 2 && y2q == y1q + 2 && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q + 1][y1q + 1] = nill;
+										white.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = white;
+										checkers[x1q][y1q] = nill;
+										click++;
+									}
+									if (check_quin(x1q, y1q, x2q, y2q) == true && checkers[x1q][y1q].second.second == q)
+									{
+										checkers[x1q][y1q] = nill;
+										white_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = white_q;
+										click++;
+									}
+									if (check_white_step(x1q, y1q, x2q, y2q) == true && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q][y1q] = nill;
+										white.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = white;
+										if (y2q == 1)
+										{
+											white_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+											checkers[x2q][y2q] = white_q;
+										}
+									}
+									else click--;
+
+
+								}
+								if (checkers[x1q][y1q].second.first == b)
+								{
+									if (checkers[x1q - 1][y1q + 1].second.first == w && checkers[x1q - 2][y1q + 2].second.first == n && x2q == x1q - 2 && y2q == y1q + 2 && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q - 1][y1q + 1] = nill;
+										black.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = black;
+										checkers[x1q][y1q] = nill;
+										if (y2q == 8)
+										{
+											black_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+											checkers[x2q][y2q] = black_q;
+										}
+										click++;
+									}
+									if (checkers[x1q + 1][y1q + 1].second.first == w && checkers[x1q + 2][y1q + 2].second.first == n && x2q == x1q + 2 && y2q == y1q + 2 && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q + 1][y1q + 1] = nill;
+										black.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = black;
+										checkers[x1q][y1q] = nill;
+										if (y2q == 8)
+										{
+											black_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+											checkers[x2q][y2q] = black_q;
+										}
+										click++;
+									}
+									if (checkers[x1q - 1][y1q - 1].second.first == w && checkers[x1q - 2][y1q - 2].second.first == n && x2q == x1q - 2 && y2q == y1q - 2 && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q - 1][y1q - 1] = nill;
+										black.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = black;
+										checkers[x1q][y1q] = nill;
+										click++;
+									}
+									if (checkers[x1q + 1][y1q - 1].second.first == w && checkers[x1q + 2][y1q - 2].second.first == n && x2q == x1q + 2 && y2q == y1q - 2 && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q + 1][y1q - 1] = nill;
+										black.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = black;
+										checkers[x1q][y1q] = nill;
+										click++;
+									}
+									if (check_quin(x1q, y1q, x2q, y2q) == true && checkers[x1q][y1q].second.second == q)
+									{
+										checkers[x1q][y1q] = nill;
+										black_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = black_q;
+
+										click++;
+									}
+									if (check_black_step(x1q, y1q, x2q, y2q) == true && checkers[x1q][y1q].second.second != q)
+									{
+										checkers[x1q][y1q] = nill;
+										black.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+										checkers[x2q][y2q] = black;
+										if (y2q == 8)
+										{
+											black_q.first.setPosition((float)x2q * 100 - 50, (float)y2q * 100 - 50);
+											checkers[x2q][y2q] = black_q;
+										}
+									}
+									else click--;
+								}
+							}
+						}
+						click++;
+					}
+
+				}
+			}
+			if (event.type == Event::Closed)
+				window.close();
+
+		}
+
+		window.clear();
+
+
+		window.draw(background);
+
+		for (int i = 1; i < 9; i++)
+		{
+			for (int j = 1; j < 9; j++)
+			{
+				window.draw(field[i][j]);
+			}
+		}
+
+		for (int i = 1; i < 9; i++)
+		{
+			for (int j = 1; j < 9; j++)
+			{
+				window.draw(checkers[i][j].first);
+			}
+		}
+
+		float x = 80;
+		float y = 0;
+		for (int i = 0; i < 8; i++)
+		{
+			text.setString(arrL[i]);
+			text.setPosition(x, y);
+			x = x + pr;
+			window.draw(text);
+		}
+
+		x = 10;
+		y = 80;
+		for (int i = 0; i < 8; i++)
+		{
+			text.setString(arrN[i]);
+			text.setPosition(x, y);
+			y = y + pr;
+			window.draw(text);
+		}
+	}
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using namespace sf;
+
+////////////////////////////////////////////////////КЛАСС ИГРОКА////////////////////////
+class Player {
+	/* это задел на следующие уроки,прошу не обращать внимания)
+	private: float w, h, dx, dy, x, y, speed;
+	int dir, playerScore, health;
+	bool life;
+	*/
+public:
+	float w, h, dx, dy, x, y, speed;
+	int dir, playerScore, health;
+	bool life;
+	String File;
+	Image image;
+	Texture texture;
+	Sprite sprite;
+	Player(Sprite F, float X, float Y, float W, float H) {
+		dir = 0; speed = 0; playerScore = 0; health = 100; dx = 0; dy = 0;
+		life = true;
+		//File = F;
+		w = W; h = H;
+		//image.loadFromFile("images/" + File);
+		image.createMaskFromColor(Color(41, 33, 59));
+		//texture.loadFromImage(image);
+		//sprite.setTexture(texture);
+		sprite = F;
+		x = X; y = Y;
+		sprite.setTextureRect(IntRect(0, 0, w, h));
+	}
+	void update(float time)
+	{
+		switch (dir)
+		{
+		case 0: dx = speed; dy = 0; break;
+		case 1: dx = -speed; dy = 0; break;
+		case 2: dx = 0; dy = speed; break;
+		case 3: dx = 0; dy = -speed; break;
+		}
+
+		x += dx*time;
+		y += dy*time;
+		speed = 0;
+		sprite.setPosition(x, y);
+		sprite.setOrigin(w / 2, h / 2);
+		interactionWithMap();
+		if (health <= 0) { life = false; }
+
+	}
+
+	float getWidth() {//получить ширину объека
+		return w;
+	}
+	void setWidth(float width) {//установить ширину объекта
+		w = width;
+	}
+
+	float getHeight() {//взять ширину объекта
+		return h;
+	}
+	void setHeight(float height) {//задать ширину объекта
+		h = height;
+	}
+
+	float getplayercoordinateX() {
+		return x;
+	}
+	float getplayercoordinateY() {
+		return y;
+	}
+
+
+
+
+	void interactionWithMap()
+	{
+
+		for (int i = y / 32; i < (y + h) / 32; i++)
+			for (int j = x / 32; j<(x + w) / 32; j++)
+			{
+				if (TileMap[i][j] == '0')
+				{
+					if (dy>0)
+					{
+						y = i * 32 - h;
+					}
+					if (dy<0)
+					{
+						y = i * 32 + 32;
+					}
+					if (dx>0)
+					{
+						x = j * 32 - w;
+					}
+					if (dx < 0)
+					{
+						x = j * 32 + 32;
+					}
+				}
+
+				if (TileMap[i][j] == 's') {
+					playerScore++;
+					TileMap[i][j] = ' ';
+				}
+
+				if (TileMap[i][j] == 'f') {
+					health -= 40;
+					TileMap[i][j] = ' ';
+				}
+
+				if (TileMap[i][j] == 'h') {
+					health += 20;
+					TileMap[i][j] = ' ';
+				}
+
+			}
+	}
+
+};
+
+class SpriteManager {//это задел на следующие уроки,прошу не обращать внимания на эти изменения)
+public:
+	Image image;
+	Texture texture;
+	Sprite sprite;
+	String name;
+	String file;
+	int widthOfSprite;
+	int heightOfSprite;
+	SpriteManager(String File, String Name) {
+		file = File;
+		name = Name;
+		image.loadFromFile("images/" + file);
+		texture.loadFromImage(image);
+		sprite.setTexture(texture);
+	}
+};
+
+
+int main()
+{
+
+
+	RenderWindow window(VideoMode(640, 480), "Lesson 17. kychka-pc.ru");
+	view.reset(FloatRect(0, 0, 640, 480));
+
+	Font font;
+	font.loadFromFile("CyrilicOld.ttf");
+	Text text("", font, 20);
+	text.setColor(Color::Black);
+
+
+	Image map_image;
+	map_image.loadFromFile("images/map.png");
+	Texture map;
+	map.loadFromImage(map_image);
+	Sprite s_map;
+	s_map.setTexture(map);
+
+	Image quest_image;
+	quest_image.loadFromFile("images/missionbg.jpg");
+	quest_image.createMaskFromColor(Color(0, 0, 0));
+	Texture quest_texture;
+	quest_texture.loadFromImage(quest_image);
+	Sprite s_quest;
+	s_quest.setTexture(quest_texture);
+	s_quest.setTextureRect(IntRect(0, 0, 340, 510));
+	s_quest.setScale(0.6f, 0.6f);
+
+	SpriteManager playerSprite("hero.png", "Hero");//это задел на следующие уроки,прошу не обращать внимания)
+
+	Player p(playerSprite.sprite, 250, 250, 96.0, 96.0);
+
+	float currentFrame = 0;
+	Clock clock;
+	bool isMove = false;//переменная для щелчка мыши по спрайту
+	float dX = 0;//корректировка движения по х
+	float dY = 0;//по у
+	while (window.isOpen())
+	{
+
+		float time = clock.getElapsedTime().asMicroseconds();
+
+		clock.restart();
+		time = time / 800;
+
+		Vector2i pixelPos = Mouse::getPosition(window);//забираем коорд курсора
+		Vector2f pos = window.mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
+		std::cout << pixelPos.x << "\n";//смотрим на координату Х позиции курсора в консоли (она не будет больше ширины окна)
+		std::cout << pos.x << "\n";//смотрим на Х,которая преобразовалась в мировые координаты
+
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+
+			if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
+				if (event.key.code == Mouse::Left)//а именно левая
+					if (p.sprite.getGlobalBounds().contains(pos.x, pos.y))//и при этом координата курсора попадает в спрайт
+					{
+						std::cout << "isClicked!\n";//выводим в консоль сообщение об этом
+						dX = pos.x - p.sprite.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
+						dY = pos.y - p.sprite.getPosition().y;//тоже самое по игреку
+						isMove = true;//можем двигать спрайт							
+					}
+			if (event.type == Event::MouseButtonReleased)//если отпустили клавишу
+				if (event.key.code == Mouse::Left) //а именно левую
+					isMove = false; //то не можем двигать спрайт
+			p.sprite.setColor(Color::White);//и даем ему прежний цвет
+		}
+		if (isMove) {//если можем двигать
+			p.sprite.setColor(Color::Green);//красим спрайт в зеленый 
+			p.x = pos.x - dX;//двигаем спрайт по Х
+			p.y = pos.y - dY;//двигаем по Y
+							 //p.sprite.setPosition(pos.x - dX, pos.y - dY);//можно и так написать,если у вас нету х и у
+		}
+
+		///////////////////////////////////////////Управление персонажем с анимацией////////////////////////////////////////////////////////////////////////
+		if (p.life) {
+			if (Keyboard::isKeyPressed(Keyboard::Left)) {
+				p.dir = 1; p.speed = 0.1;
+				currentFrame += 0.005*time;
+				if (currentFrame > 3) currentFrame -= 3;
+				p.sprite.setTextureRect(IntRect(96 * int(currentFrame), 96, 96, 96));
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Right)) {
+				p.dir = 0; p.speed = 0.1;
+				currentFrame += 0.005*time;
+				if (currentFrame > 3) currentFrame -= 3;
+				p.sprite.setTextureRect(IntRect(96 * int(currentFrame), 192, 96, 96));
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Up)) {
+				p.dir = 3; p.speed = 0.1;
+				currentFrame += 0.005*time;
+				if (currentFrame > 3) currentFrame -= 3;
+				p.sprite.setTextureRect(IntRect(96 * int(currentFrame), 307, 96, 96));
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Down)) {
+				p.dir = 2; p.speed = 0.1;
+
+				currentFrame += 0.005*time;
+				if (currentFrame > 3) currentFrame -= 3;
+				p.sprite.setTextureRect(IntRect(96 * int(currentFrame), 0, 96, 96));
+			}
+			getplayercoordinateforview(p.getplayercoordinateX(), p.getplayercoordinateY());
+		}
+
+
+		p.update(time);
+
+
+		window.setView(view);
+		window.clear();
+
+
+
+		for (int i = 0; i < HEIGHT_MAP; i++)
+			for (int j = 0; j < WIDTH_MAP; j++)
+			{
+				if (TileMap[i][j] == ' ')  s_map.setTextureRect(IntRect(0, 0, 32, 32));
+				if (TileMap[i][j] == 's')  s_map.setTextureRect(IntRect(32, 0, 32, 32));
+				if ((TileMap[i][j] == '0')) s_map.setTextureRect(IntRect(64, 0, 32, 32));
+				if ((TileMap[i][j] == 'f')) s_map.setTextureRect(IntRect(96, 0, 32, 32));
+				if ((TileMap[i][j] == 'h')) s_map.setTextureRect(IntRect(128, 0, 32, 32));
+				s_map.setPosition(j * 32, i * 32);
+
+				window.draw(s_map);
+			}
+
+
+
+		window.draw(p.sprite);
+
+
+		window.display();
+	}
+
+	return 0;
+}
