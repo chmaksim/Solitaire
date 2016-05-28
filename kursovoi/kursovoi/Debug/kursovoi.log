@@ -1,11 +1,8 @@
 ﻿  main.cpp
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(213): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(308): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(321): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(271): warning C4101: y1: неиспользованная локальная переменная
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(212): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(312): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(325): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
 c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(47): warning C4101: d1: неиспользованная локальная переменная
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(271): warning C4101: x1: неиспользованная локальная переменная
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(271): warning C4101: kk: неиспользованная локальная переменная
 c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(47): warning C4101: c3: неиспользованная локальная переменная
 c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(47): warning C4101: dd: неиспользованная локальная переменная
 c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(47): warning C4101: d2: неиспользованная локальная переменная

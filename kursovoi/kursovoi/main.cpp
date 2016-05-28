@@ -1,4 +1,4 @@
-#include <cstdio>
+п»ї#include <cstdio>
 #include <SFML/Graphics.hpp>
 #include <ctime>
 
@@ -9,10 +9,10 @@ using namespace sf;
 using namespace std;
 
 
-//процедура проверки хода
+//РїСЂРѕС†РµРґСѓСЂР° РїСЂРѕРІРµСЂРєРё С…РѕРґР°
 bool provk(int a, int b, int c, int d)
 {
-	if ((a + b)%2 == 1)
+	if ((a + b) % 2 == 1)
 		if (c - d == 1)
 		{
 			return true;
@@ -20,7 +20,7 @@ bool provk(int a, int b, int c, int d)
 	return false;
 }
 
-//разложение в основную клоду
+//СЂР°Р·Р»РѕР¶РµРЅРёРµ РІ РѕСЃРЅРѕРІРЅСѓСЋ РєР»РѕРґСѓ
 bool provka(int a, int b, int c, int d)
 {
 	if (a == b)
@@ -34,8 +34,8 @@ bool provka(int a, int b, int c, int d)
 //c1
 int pust(int a)
 {
-		if (a == 0)
-			return a;
+	if (a == 0)
+		return a;
 }
 
 
@@ -43,9 +43,8 @@ int pust(int a)
 int main()
 {
 	RenderWindow window(VideoMode(700, 700), "kosinka");
-	int a = 666;
+	int a = 24;
 	int b1, c2, d1, b2, c1, d2, c3, dd;
-	int e = 23;
 	int bb;
 	int sek = 0, seko = 0;
 	int p = 23;
@@ -215,8 +214,8 @@ int main()
 
 	pair<Sprite, pair<int, int>> st[24][7]//[12]
 	{
-		{ card[24] , shirt , shirt, shirt, shirt , shirt, shirt},// , karta, karta, karta, karta, karta },
-		{ karta, card[26],shirt , shirt, shirt, shirt , shirt},//, karta, karta, karta, karta, karta },
+		{ card[24] , shirt , shirt, shirt, shirt , shirt, shirt },// , karta, karta, karta, karta, karta },
+		{ karta, card[26],shirt , shirt, shirt, shirt , shirt },//, karta, karta, karta, karta, karta },
 		{ karta, karta, card[29], shirt, shirt, shirt , shirt },//, karta, karta, karta, karta, karta },
 		{ karta, karta, karta, card[33], shirt, shirt, shirt },//, karta, karta, karta, karta , karta },
 		{ karta, karta, karta, karta, card[38], shirt, shirt },//, karta, karta, karta, karta , karta },
@@ -242,7 +241,7 @@ int main()
 	};
 
 	pair<Sprite, pair<int, int>> kol[24]
-	{ card[0],karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, karta, };
+	{ card[0],card[1],card[2],card[3],card[4],card[5],card[6],card[7],card[8],card[9],card[10],card[11],card[12],card[13],card[14],card[15],card[16],card[17],card[18],card[19],card[20],card[21],card[22],card[23] };
 
 	pair<Sprite, pair<int, int>> osn[13][4]
 	{
@@ -261,22 +260,27 @@ int main()
 		{ karta, karta, karta, karta },
 	};
 
-	bool isMove = false;//переменная для щелчка мыши по спрайту
-	bool moved = false;//верно ли совершено движение
-	float dX[7] = { 0,0,0,0,0,0,0 };//корректировка движения по х
-	float dY[7] = { 0,0,0,0,0,0,0 };//по у
+	bool isMove = false;//РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С‰РµР»С‡РєР° РјС‹С€Рё РїРѕ СЃРїСЂР°Р№С‚Сѓ
+	bool moved = false;//РІРµСЂРЅРѕ Р»Рё СЃРѕРІРµСЂС€РµРЅРѕ РґРІРёР¶РµРЅРёРµ
+	float dX[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєР° РґРІРёР¶РµРЅРёСЏ РїРѕ С…
+	float dY[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//РїРѕ Сѓ
 
 	bool pres = true;
 
-	int kk,x1,y1;//количество выбраных карт
+	int kk;//РєРѕР»РёС‡РµСЃС‚РІРѕ РІС‹Р±СЂР°РЅС‹С… РєР°СЂС‚
+	int qq;
+
+
+	bool mooo[3] = { false, false, false };
+
 
 	while (window.isOpen())
 	{
-	
+
 		Vector2i pos = Mouse::getPosition(window);
 
-		window.clear(Color(0,128,0));
-//создание пустых ячеек
+		window.clear(Color(0, 128, 0));
+		//СЃРѕР·РґР°РЅРёРµ РїСѓСЃС‚С‹С… СЏС‡РµРµРє
 		empty.setPosition(310, 10);
 		window.draw(empty);
 		empty.setPosition(410, 10);
@@ -300,20 +304,20 @@ int main()
 		window.draw(empty);
 		empty.setPosition(610, 150);
 		window.draw(empty);
-//рисовка начальной заготовки 
+		//СЂРёСЃРѕРІРєР° РЅР°С‡Р°Р»СЊРЅРѕР№ Р·Р°РіРѕС‚РѕРІРєРё 
 		for (int i = 0; i < 24; i++)
 		{
 			for (int j = 0; j < 7; j++)
 			{
-				st[i][j].first.setPosition(j*100 + 10, i*23 + 150);
+				st[i][j].first.setPosition(j * 100 + 10, i * 23 + 150);
 			}
 		}
-		
+
 		for (int i = 0; i < 24; i++)
 		{
 			kol[i].first.setPosition(110, 10);
 		}
-		
+
 		for (int i = 0; i < 13; i++)
 		{
 			for (int j = 0; j < 4; j++)
@@ -332,13 +336,16 @@ int main()
 			//	std::cout << pos.x << "\n";
 			//	std::cout << pos.y << "\n";
 
-		
+			for (int i = 0; i < 3; i++)
+			{
+				mooo[i] = false;
+			}
 
 
-		
-			if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
-				if (event.key.code == Mouse::Left)//а именно левая
-					if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y > 150))//и при этом координата курсора попадает в спрайт
+
+			if (event.type == Event::MouseButtonPressed)//РµСЃР»Рё РЅР°Р¶Р°С‚Р° РєР»Р°РІРёС€Р° РјС‹С€Рё
+				if (event.key.code == Mouse::Left)//Р° РёРјРµРЅРЅРѕ Р»РµРІР°СЏ
+					if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y > 150))//Рё РїСЂРё СЌС‚РѕРј РєРѕРѕСЂРґРёРЅР°С‚Р° РєСѓСЂСЃРѕСЂР° РїРѕРїР°РґР°РµС‚ РІ СЃРїСЂР°Р№С‚
 					{
 						b1 = pos.x / 100;
 						printf("%d", b1);
@@ -353,167 +360,299 @@ int main()
 						}
 						if (c1 != 0)
 						{
-							dX[1] = pos.x - st[c1 - 1][b1].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
-							dY[1] = pos.y - st[c1 - 1][b1].first.getPosition().y;//тоже самое по игреку
-							isMove = true;//можем двигать спрайт
-							moved = false;
-							sek = 1;
+							if (pos.y > 136 + 24 * c1)
+							{
+								dX[1] = pos.x - st[c1 - 1][b1].first.getPosition().x;//РґРµР»Р°РµРј СЂР°Р·РЅРѕСЃС‚СЊ РјРµР¶РґСѓ РїРѕР·РёС†РёРµР№ РєСѓСЂСЃРѕСЂР° Рё СЃРїСЂР°Р№С‚Р°.РґР»СЏ РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРё РЅР°Р¶Р°С‚РёСЏ
+								dY[1] = pos.y - st[c1 - 1][b1].first.getPosition().y;//С‚РѕР¶Рµ СЃР°РјРѕРµ РїРѕ РёРіСЂРµРєСѓ
+								isMove = true;//РјРѕР¶РµРј РґРІРёРіР°С‚СЊ СЃРїСЂР°Р№С‚
+								moved = false;
+								kk = 1;
+								sek = 1;
+							}
+							else
+							{
+								kk = ((c1 - 1) * 24 + 150 - pos.y) / 24 + 2;
+								if (st[c1 - kk][b1].second.first != -1)
+								{
+									for (int i = 0; i < kk; i++)
+									{
+										dX[i] = pos.x - st[c1 - 1 - i][b1].first.getPosition().x;//РґРµР»Р°РµРј СЂР°Р·РЅРѕСЃС‚СЊ РјРµР¶РґСѓ РїРѕР·РёС†РёРµР№ РєСѓСЂСЃРѕСЂР° Рё СЃРїСЂР°Р№С‚Р°.РґР»СЏ РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРё РЅР°Р¶Р°С‚РёСЏ
+										dY[i] = pos.y - st[c1 - 1 - i][b1].first.getPosition().y;//С‚РѕР¶Рµ СЃР°РјРѕРµ РїРѕ РёРіСЂРµРєСѓ
+									}
+									isMove = true;//РјРѕР¶РµРј РґРІРёРіР°С‚СЊ СЃРїСЂР°Р№С‚
+									moved = false;
+									sek = 1;
+
+								}
+							}
 						}
 					}
-					else if ((pos.x > 110) && (pos.x < 182) && (pos.y > 10) && (pos.y < 110))//и при этом координата курсора попадает в спрайт
+					else if ((pos.x > 110) && (pos.x < 182) && (pos.y > 10) && (pos.y < 110) && (a - p != 1))//Рё РїСЂРё СЌС‚РѕРј РєРѕРѕСЂРґРёРЅР°С‚Р° РєСѓСЂСЃРѕСЂР° РїРѕРїР°РґР°РµС‚ РІ СЃРїСЂР°Р№С‚
 					{
-						dX[1] = pos.x - st[12][a].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
-						dY[1] = pos.y - st[12][a].first.getPosition().y;//тоже самое по игреку
-						isMove = true;//можем двигать спрайт
+						dX[1] = pos.x - kol[a].first.getPosition().x;//РґРµР»Р°РµРј СЂР°Р·РЅРѕСЃС‚СЊ РјРµР¶РґСѓ РїРѕР·РёС†РёРµР№ РєСѓСЂСЃРѕСЂР° Рё СЃРїСЂР°Р№С‚Р°.РґР»СЏ РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРё РЅР°Р¶Р°С‚РёСЏ
+						dY[1] = pos.y - kol[a].first.getPosition().y;//С‚РѕР¶Рµ СЃР°РјРѕРµ РїРѕ РёРіСЂРµРєСѓ
+						isMove = true;//РјРѕР¶РµРј РґРІРёРіР°С‚СЊ СЃРїСЂР°Р№С‚
 						sek = 2;
 					}
-					//else if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y < 150) && (pos.x > 310))//и при этом координата курсора попадает в спрайт
-					//{
-					//	dX[b1] = pos.x - st[12][a].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
-					//	dY[b1] = pos.y - st[12][a].first.getPosition().y;//тоже самое по игреку
-					//	isMove = true;//можем двигать спрайт
-					//	sek = 3;
-					//}
-
-			if (event.type == Event::MouseButtonReleased)//если отпустили клавишу
-				if (event.key.code == Mouse::Left) //а именно левую
-				{
-					isMove = false; //то не можем двигать спрайт
-					b2 = pos.x / 100;
-					if (pos.y > 150)
+					else if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y < 110) && (pos.x > 310))//Рё РїСЂРё СЌС‚РѕРј РєРѕРѕСЂРґРёРЅР°С‚Р° РєСѓСЂСЃРѕСЂР° РїРѕРїР°РґР°РµС‚ РІ СЃРїСЂР°Р№С‚
 					{
-						for (int i = 0; i < 20; i++)
+						qq = pos.x / 100;
+						dX[1] = pos.x - osn[c2][qq].first.getPosition().x;//РґРµР»Р°РµРј СЂР°Р·РЅРѕСЃС‚СЊ РјРµР¶РґСѓ РїРѕР·РёС†РёРµР№ РєСѓСЂСЃРѕСЂР° Рё СЃРїСЂР°Р№С‚Р°.РґР»СЏ РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРё РЅР°Р¶Р°С‚РёСЏ
+						dY[1] = pos.y - osn[c2][qq].first.getPosition().y;//С‚РѕР¶Рµ СЃР°РјРѕРµ РїРѕ РёРіСЂРµРєСѓ
+						isMove = true;//РјРѕР¶РµРј РґРІРёРіР°С‚СЊ СЃРїСЂР°Р№С‚
+						sek = 3;
+					}
+
+					if (event.type == Event::MouseButtonReleased)//РµСЃР»Рё РѕС‚РїСѓСЃС‚РёР»Рё РєР»Р°РІРёС€Сѓ
+						if (event.key.code == Mouse::Left) //Р° РёРјРµРЅРЅРѕ Р»РµРІСѓСЋ
 						{
-							if (st[i][b2].second == karta.second)
+							isMove = false; //С‚Рѕ РЅРµ РјРѕР¶РµРј РґРІРёРіР°С‚СЊ СЃРїСЂР°Р№С‚
+							b2 = pos.x / 100;
+							if (sek == 1)
 							{
-								c2 = i;
-								break;
+								if (pos.y > 150)
+								{
+									for (int i = 0; i < 20; i++)
+									{
+										if (st[i][b2].second == karta.second)
+										{
+											c2 = i;
+											break;
+										}
+									}
+									if (kk == 1)
+									{
+										if ((provk(st[c2 - 1][b2].second.second, st[c1 - 1][b1].second.second, st[c2 - 1][b2].second.first, st[c1 - 1][b1].second.first)) || (c2 == 0 && st[c1 - 1][b1].second.first == 13))
+										{
+											st[c2][b2] = st[c1 - 1][b1];
+											st[c1 - 1][b1] = karta;
+											window.draw(st[c2][b2].first);
+											moved = true;
+										}
+									}
+									else
+									{
+										if ((provk(st[c2 - 1][b2].second.second, st[c1 - kk][b1].second.second, st[c2 - 1][b2].second.first, st[c1 - kk][b1].second.first)) || (c2 == 0 && st[c1 - kk][b1].second.first == 13))
+										{
+											for (int i = 0; i < kk; i++)
+											{
+												st[c2 + i][b2] = st[c1 - kk + i][b1];
+												st[c1 - kk + i][b1] = karta;
+												window.draw(st[c2 + i][b2].first);
+											}
+											moved = true;
+										}
+									}
+								}
+								else if (pos.x > 310)
+								{
+									b2 = b2 - 3;
+									for (int i = 0; i < 13; i++)
+									{
+										if (osn[i][b2].second == karta.second)
+										{
+											c2 = i;
+											break;
+										}
+									}
+									if ((provka(osn[c2 - 1][b2].second.second, st[c1 - 1][b1].second.second, osn[c2 - 1][b2].second.first, st[c1 - 1][b1].second.first)) || (c2 == 0 && st[c1 - 1][b1].second.first == 1))
+									{
+										osn[c2][b2] = st[c1 - 1][b1];
+										st[c1 - 1][b1] = karta;
+										window.draw(osn[c2][b2].first);
+										moved = true;
+									}
+								}
+							}
+							else if (sek == 2)
+							{
+								if (pos.y > 150)
+								{
+									for (int i = 0; i < 20; i++)
+									{
+										if (st[i][b2].second == karta.second)
+										{
+											c2 = i;
+											break;
+										}
+									}
+									if ((provk(st[c2 - 1][b2].second.second, kol[a].second.second, st[c2 - 1][b2].second.first, kol[a].second.first)) || (c2 == 0 && kol[a].second.first == 13))
+									{
+										st[c2][b2] = kol[a];
+										for (int i = a; i < p; i++)
+										{
+											kol[i] = kol[i + 1];
+										}
+										window.draw(st[c2][b2].first);
+									
+										p--;
+										moved = true;
+									}
+								}
+								else if (pos.x > 310)
+								{
+									b2 = b2 - 3;
+									for (int i = 0; i < 13; i++)
+									{
+										if (osn[i][b2].second == karta.second)
+										{
+											c2 = i;
+											break;
+										}
+									}
+									if ((provka(osn[c2 - 1][b2].second.second, kol[a].second.second, osn[c2 - 1][b2].second.first, kol[a].second.first)) || (c2 == 0 && kol[a].second.first == 1))
+									{
+										osn[c2][b2] = kol[a];
+										kol[a] = karta;
+										window.draw(osn[c2][b2].first);
+
+										p--;
+										moved = true;
+									}
+								}
 							}
 						}
-						if ((provk(st[c2 - 1][b2].second.second, st[c1 - 1][b1].second.second, st[c2 - 1][b2].second.first, st[c1 - 1][b1].second.first)) || (c2 == 0 && st[c1 - 1][b1].second.first == 13))
-						{
-							st[c2][b2] = st[c1 - 1][b1];
-							st[c1 - 1][b1] = karta;
-							window.draw(st[c2][b2].first);
-							moved = true;
-						}
-					}
-					else if (pos.x > 310)
+		}
+		if (isMove) {//РµСЃР»Рё РјРѕР¶РµРј РґРІРёРіР°С‚СЊ
+			if (sek == 1)
+			{
+				if (kk == 1)
+				{
+					st[c1 - 1][b1].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//РјРѕР¶РЅРѕ Рё С‚Р°Рє РЅР°РїРёСЃР°С‚СЊ,РµСЃР»Рё Сѓ РІР°СЃ РЅРµС‚Сѓ С… Рё Сѓ
+					window.draw(st[c1 - 1][b1].first);
+				}
+				else
+				{
+					for (int i = 0; i < kk; i++)
 					{
-						b2 = b2 - 3;
-						for (int i = 0; i < 13; i++)
-						{
-							if (osn[i][b2].second == karta.second)
-							{
-								c2 = i;
-								break;
-							}
-						}
-						if ((provka(osn[c2 - 1][b2].second.second, st[c1 - 1][b1].second.second, osn[c2 - 1][b2].second.first, st[c1 - 1][b1].second.first)) || (c2 == 0 && st[c1 - 1][b1].second.first == 1))
-						{
-							osn[c2][b2] = st[c1 - 1][b1];
-							st[c1 - 1][b1] = karta;
-							window.draw(osn[c2][b2].first);
-							moved = true;
-						}
+						st[c1 - 1 - i][b1].first.setPosition(pos.x - dX[i], pos.y - dY[i]);//РјРѕР¶РЅРѕ Рё С‚Р°Рє РЅР°РїРёСЃР°С‚СЊ,РµСЃР»Рё Сѓ РІР°СЃ РЅРµС‚Сѓ С… Рё Сѓ
+						window.draw(st[c1 - 1 - i][b1].first);
 					}
 				}
 			}
-			if (isMove) {//если можем двигать
-				st[c1 - 1][b1].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//можно и так написать,если у вас нету х и у
-				window.draw(st[c1 - 1][b1].first);
-			}
-			/*
-			if (d2 == 1 && (pos.x - 9) == (pos.x + 17))
+			if (sek == 2)
 			{
-				d2 = 0;
-				c2 = (pos.y - 150)/25;
-				b2 = pos.x / 100;
-				for (int i = 1; i <= kk; i++)
-				{
-					st[c2+1-i][b2] = st[c1 - i][b1];
-					window.draw(st[c2][b2].first);
-				}
-			}*/
-
-			for (int i = 0; i < 20; i++)
-			{
-				if (st[i][b1].second == karta.second)
-				{
-					bb = i;
-					break;
-				}
-			}
-
-
-			if (st[bb - 1][b1].second == shirt.second && bb != 0 && moved) //отвечает за то, чтобы весто рубашки появлялись карты
-			{
-				if (b1 == 1)
-					st[bb - 1][b1] = card[25];
-				if (b1 == 2)
-					st[bb - 1][b1] = card[29 - bb];
-				if (b1 == 3)
-					st[bb - 1][b1] = card[33 - bb];
-				if (b1 == 4)
-					st[bb - 1][b1] = card[38 - bb];
-				if (b1 == 5)
-					st[bb - 1][b1] = card[44 - bb];
-				if (b1 == 6)
-					st[bb - 1][b1] = card[51 - bb];
-			}
-			
-			
-			for (int i = 0; i < 13; i++)
-			{
-				for (int j = 0; j < 4; j++)
-				{
-					window.draw(osn[i][j].first);
-				}
-			}
-
-			for (int i = 0; i < 24; i++)
-			{
-				for (int j = 0; j < 7; j++)
-				{
-					window.draw(st[i][j].first);
-				}
-			}
-			if (event.type == Event::MouseButtonPressed)
-			{
-				pres = true;
-			}
-
-			if (event.type == Event::MouseButtonReleased && pres == true)
-				if ((pos.x > 10) && (pos.x < 82) && (pos.y > 10) && (pos.y < 110))
-				{
-					a = e;
-					e--;
-					pres = false;
-				}
-
-			if (e == 0)
-			{
-				empty.setPosition(10, 10);
-				window.draw(empty);
-				e = p;
-			}
-			else
-			{
-				sshirt.setPosition(10, 10);
-				window.draw(sshirt);
-			}
-
-			if (a != 666)
-			{
-				kol[a] = card[a];
-				kol[a].first.setPosition(110, 10);
+				mooo[2] = true;
+				kol[a].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//РјРѕР¶РЅРѕ Рё С‚Р°Рє РЅР°РїРёСЃР°С‚СЊ,РµСЃР»Рё Сѓ РІР°СЃ РЅРµС‚Сѓ С… Рё Сѓ
 				window.draw(kol[a].first);
 			}
+			if (sek == 3)
+			{
+				osn[c2][qq].first.setPosition(pos.x - dX[1], pos.y - dY[1]);
+				window.draw(osn[c2][qq].first);
+			}
+		}
+
+		for (int i = 0; i < 20; i++)
+		{
+			if (st[i][b1].second == karta.second)
+			{
+				bb = i;
+				break;
+			}
+		}
 
 
-			window.display();
-	
+		if (st[bb - 1][b1].second == shirt.second && bb != 0 && moved) //Г®Е€ГўДєГ·Е•ДєЕ€ Г§Е• Е€Г®, Г·Е€Г®ГЎЕ± ГўДєЕ„Е€Г® Д‘ГіГЎЕ•Е™Д™ДЌ ДЏГ®Л™ГўГ«Л™Г«ДЌЕ„Гј Д™Е•Д‘Е€Е±
+		{
+			if (b1 == 1)
+				st[bb - 1][b1] = card[25];
+			if (b1 == 2)
+				st[bb - 1][b1] = card[29 - bb];
+			if (b1 == 3)
+				st[bb - 1][b1] = card[33 - bb];
+			if (b1 == 4)
+				st[bb - 1][b1] = card[38 - bb];
+			if (b1 == 5)
+				st[bb - 1][b1] = card[44 - bb];
+			if (b1 == 6)
+				st[bb - 1][b1] = card[51 - bb];
+		}
+
+
+		for (int i = 0; i < 13; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				window.draw(osn[i][j].first);
+			}
+		}
+
+		for (int i = 0; i < 24; i++)
+		{
+			for (int j = 0; j < 7; j++)
+			{
+				window.draw(st[i][j].first);
+			}
+		}
+
+		if (event.type == Event::MouseButtonPressed)
+		{
+			pres = true;
+		}
+
+		if (event.type == Event::MouseButtonReleased && pres == true)
+			if ((pos.x > 10) && (pos.x < 82) && (pos.y > 10) && (pos.y < 110))
+			{
+				a--;
+				pres = false;
+			}
 		
+		if (a == 0)
+		{
+			empty.setPosition(10, 10);
+			window.draw(empty);
+			a = p;
+		}
+		else
+		{
+
+			sshirt.setPosition(10, 10);
+			window.draw(sshirt);
+		}
+
+		for (int i = p; i >= a; i--)
+		{
+		//	kol[a].first.setPosition(110, 10);
+			window.draw(kol[i].first);
+		}
+
+	/*	if (event.type == Event::MouseButtonPressed)
+		{
+			pres = true;
+		}
+
+		if (event.type == Event::MouseButtonReleased && pres == true)
+			if ((pos.x > 10) && (pos.x < 82) && (pos.y > 10) && (pos.y < 110))
+			{
+				a = e;
+				e--;
+				pres = false;
+			}
+
+		if (e == 0)
+		{
+			empty.setPosition(10, 10);
+			window.draw(empty);
+			e = p;
+		}
+		else
+		{
+			sshirt.setPosition(10, 10);
+			window.draw(sshirt);
+		}
+
+		if (a != 666)
+		{
+			kol[a] = card[a];
+			kol[a].first.setPosition(110, 10);
+			window.draw(kol[a].first);
+		}*/
+
+
+		window.display();
+
+
 	}
 
 	return 0;
