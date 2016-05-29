@@ -1,5 +1,8 @@
 ﻿#include <cstdio>
+
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+
 #include <ctime>
 
 #include <iostream>
@@ -274,8 +277,14 @@ int main()
 	bool mooo[3] = { false, false, false };
 
 
+	Music music;
+	music.openFromFile("music/music1.ogg");
+	music.play();
+
 	while (window.isOpen())
 	{
+
+		
 
 		Vector2i pos = Mouse::getPosition(window);
 
@@ -325,6 +334,8 @@ int main()
 				osn[i][j].first.setPosition(j * 100 + 310, 10);
 			}
 		}
+
+		
 
 		Event event;
 
