@@ -1,10 +1,9 @@
 ﻿  main.cpp
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(215): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(321): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(334): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(50): warning C4101: d1: неиспользованная локальная переменная
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(50): warning C4101: c3: неиспользованная локальная переменная
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(50): warning C4101: dd: неиспользованная локальная переменная
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(50): warning C4101: d2: неиспользованная локальная переменная
-c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(42): warning C4715: pust: значение возвращается не при всех путях выполнения
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(418): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(431): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(104): warning C4101: d1: неиспользованная локальная переменная
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(104): warning C4101: c3: неиспользованная локальная переменная
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(104): warning C4101: dd: неиспользованная локальная переменная
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(104): warning C4101: d2: неиспользованная локальная переменная
+c:\users\максим\documents\visual studio 2015\projects\kursovoi\kursovoi\main.cpp(91): warning C4715: pust: значение возвращается не при всех путях выполнения
   kursovoi.vcxproj -> C:\Users\Максим\documents\visual studio 2015\Projects\kursovoi\Debug\kursovoi.exe

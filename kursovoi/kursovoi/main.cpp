@@ -12,6 +12,55 @@ using namespace sf;
 using namespace std;
 
 
+void menu(RenderWindow & window)
+{
+	Texture tplay, texit;
+	tplay.loadFromFile("images/play.png");
+	texit.loadFromFile("images/exit.png");
+	Sprite play, exit;
+	play.setTexture(tplay);
+	exit.setTexture(texit);
+	bool isMenu = true;
+	int menuNum = 0;
+	play.setPosition(300,300);
+	exit.setPosition(300, 400);
+
+	//////////MENU///////////////
+	while (isMenu)
+	{
+		Vector2i pos = Mouse::getPosition(window);
+
+		play.setColor(Color::White);
+		exit.setColor(Color::White);
+		menuNum = 0;
+		window.clear(Color(128, 200, 128));
+
+		if (pos.x>300 && pos.x<470 && pos.y>300 && pos.y<340 ) { play.setColor(Color::Blue); menuNum = 1; }
+		if (pos.x>300 && pos.x<470 && pos.y>400 && pos.y<440) { exit.setColor(Color::Blue); menuNum = 2; }
+
+		if (Mouse::isButtonPressed(Mouse::Left))
+		{
+			if (menuNum == 1) isMenu = false;//если нажали первую кнопку, то выходим из меню 
+			if (menuNum == 2) { exit; window.close(); }
+
+		}
+
+		window.draw(play);
+		window.draw(exit);
+		
+		window.display();
+	}
+	////////////////////////////////////////////////////
+}
+
+
+
+
+
+
+
+
+
 //процедура проверки хода
 bool provk(int a, int b, int c, int d)
 {
@@ -45,6 +94,11 @@ int pust(int a)
 
 int main()
 {
+	
+	RenderWindow window1(sf::VideoMode(700,700), "kosinka");
+	menu(window1);//вызов меню
+
+
 	RenderWindow window(VideoMode(700, 700), "kosinka");
 	int a = 24;
 	int b1, c2, d1, b2, c1, d2, c3, dd;
@@ -212,8 +266,8 @@ int main()
 	pair<Sprite, pair<int, int>> card[52]
 	{ crossa, cross2, cross3, cross4, cross5, cross6, cross7, cross8, cross9, cross10, crossv, crossd, crossk, bubaa, buba2, buba3, buba4, buba5, buba6, buba7, buba8, buba9, buba10, bubav, bubad, bubak, brooda, brood2, brood3, brood4, brood5, brood6, brood7, brood8, brood9, brood10, broodv, broodd, broodk, peaka, peak2, peak3, peak4, peak5, peak6, peak7, peak8, peak9, peak10, peakv, peakd, peakk };
 
-	srand(time(NULL));
-	random_shuffle(card, card + 52);
+	//srand(time(NULL));
+	//random_shuffle(card, card + 52);
 
 	pair<Sprite, pair<int, int>> st[24][7]//[12]
 	{
@@ -268,27 +322,70 @@ int main()
 	float dX[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//корректировка движения по х
 	float dY[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//по у
 
+	int f = 0;
+
+	bool tab = true;
+
 	bool pres = true;
 
 	int kk;//количество выбраных карт
 	int qq;
 
-
+	bool yes = false;
 	bool mooo[3] = { false, false, false };
-
+	bool nerabotaem = false;
 
 	Music music;
-	music.openFromFile("music/music1.ogg");
-	music.play();
+	//if (f == 0)
+	//{
+	//	music.openFromFile("music/music1.ogg");
+	//	music.play();
+	//}
+	//if (f == 1)
+	//{
+	//	music.openFromFile("music/music2.ogg");
+	//	music.play();
+	//}
 
+
+	
 	while (window.isOpen())
 	{
+		if (f == 0)
+		{
+			music.openFromFile("music/music1.ogg");
+			music.play();
+		}
+		if (f == 1)
+		{
+			music.openFromFile("music/music2.ogg");
+			music.play();
+		}
 
-		
+		if (Keyboard::isKeyPressed(Keyboard::Tab))
+		{
+			f++;
+			if (f == 5)
+				f = 0;
+			printf("%d", f);
+			pres = false;
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Tab))
+		{
+			pres = true;
+		}
+
+		//if (Keyboard::isKeyPressed(Keyboard::Tab))
+		//{
+		//	f++;
+		//	if (f == 5)
+		//		f = 0;
+		//	printf("%d", f);
+		//}
 
 		Vector2i pos = Mouse::getPosition(window);
 
-		window.clear(Color(0, 128, 0));
+		window.clear(Color(0,128,0));
 		//создание пустых ячеек
 		empty.setPosition(310, 10);
 		window.draw(empty);
@@ -352,7 +449,7 @@ int main()
 				mooo[i] = false;
 			}
 
-
+			
 
 			if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
 				if (event.key.code == Mouse::Left)//а именно левая
@@ -398,8 +495,9 @@ int main()
 							}
 						}
 					}
-					else if ((pos.x > 110) && (pos.x < 182) && (pos.y > 10) && (pos.y < 110) && (a - p != 1))//и при этом координата курсора попадает в спрайт
+					else if ((pos.x > 110) && (pos.x < 182) && (pos.y > 10) && (pos.y < 110))// && (a - p != 1))//и при этом координата курсора попадает в спрайт
 					{
+					
 						dX[1] = pos.x - kol[a].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
 						dY[1] = pos.y - kol[a].first.getPosition().y;//тоже самое по игреку
 						isMove = true;//можем двигать спрайт
@@ -497,6 +595,7 @@ int main()
 										window.draw(st[c2][b2].first);
 									
 										p--;
+
 										moved = true;
 									}
 								}
@@ -514,11 +613,15 @@ int main()
 									if ((provka(osn[c2 - 1][b2].second.second, kol[a].second.second, osn[c2 - 1][b2].second.first, kol[a].second.first)) || (c2 == 0 && kol[a].second.first == 1))
 									{
 										osn[c2][b2] = kol[a];
-										kol[a] = karta;
+										for (int i = a; i < p; i++)
+										{
+											kol[i] = kol[i + 1];
+										}
 										window.draw(osn[c2][b2].first);
 
 										p--;
 										moved = true;
+
 									}
 								}
 							}
@@ -597,37 +700,44 @@ int main()
 			}
 		}
 
-		if (event.type == Event::MouseButtonPressed)
-		{
-			pres = true;
-		}
 
-		if (event.type == Event::MouseButtonReleased && pres == true)
-			if ((pos.x > 10) && (pos.x < 82) && (pos.y > 10) && (pos.y < 110))
+		if (p != -1)
+		{
+			if (event.type == Event::MouseButtonPressed)
 			{
-				a--;
-				pres = false;
+				pres = true;
 			}
-		
-		if (a == 0)
-		{
-			empty.setPosition(10, 10);
-			window.draw(empty);
-			a = p;
-		}
-		else
-		{
 
-			sshirt.setPosition(10, 10);
-			window.draw(sshirt);
-		}
+			if (event.type == Event::MouseButtonReleased && pres == true)
+				if ((pos.x > 10) && (pos.x < 82) && (pos.y > 10) && (pos.y < 110))
+				{
+					if (yes)
+					{
+						a = p;
+						yes = false;
+					}
+					else a--;
+					pres = false;
+				}
 
-		for (int i = p; i >= a; i--)
-		{
-		//	kol[a].first.setPosition(110, 10);
-			window.draw(kol[i].first);
-		}
+			if (a == 0)
+			{
+				empty.setPosition(10, 10);
+				window.draw(empty);
+				yes = true;
+			}
+			else
+			{
+				sshirt.setPosition(10, 10);
+				window.draw(sshirt);
+			}
 
+			for (int i = p; i >= a; i--)
+			{
+				//	kol[a].first.setPosition(110, 10);
+				window.draw(kol[i].first);
+			}
+		}
 	/*	if (event.type == Event::MouseButtonPressed)
 		{
 			pres = true;
