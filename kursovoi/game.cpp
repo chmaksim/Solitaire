@@ -20,7 +20,7 @@ bool game()
 {
 
 	RenderWindow window1(sf::VideoMode(700, 700), "kosinka");
-	menu(window1);//вызов меню
+	menu(window1);//ГўЕ±Г§Г®Гў Д›ДєГ­ЕЈ
 
 
 	RenderWindow window(VideoMode(700, 700), "kosinka");
@@ -248,10 +248,10 @@ bool game()
 		{ karta, karta, karta, karta },
 	};
 
-	bool isMove = false;//переменная для щелчка мыши по спрайту
-	bool moved = false;//верно ли совершено движение
-	float dX[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//корректировка движения по х
-	float dY[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//по у
+	bool isMove = false;//ДЏДєД‘ДєД›ДєГ­Г­Е•Л™ Г¤Г«Л™ ЕЇДєГ«Г·Д™Е• Д›Е±Е™ДЌ ДЏГ® Е„ДЏД‘Е•Г©Е€Гі
+	bool moved = false;//ГўДєД‘Г­Г® Г«ДЌ Е„Г®ГўДєД‘Е™ДєГ­Г® Г¤ГўДЌД‡ДєГ­ДЌДє
+	float dX[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//Д™Г®Д‘Д‘ДєД™Е€ДЌД‘Г®ГўД™Е• Г¤ГўДЌД‡ДєГ­ДЌЛ™ ДЏГ® Е‘
+	float dY[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };//ДЏГ® Гі
 
 	int f = 1;
 
@@ -260,7 +260,7 @@ bool game()
 	bool pres = true;
 	bool press = false;
 
-	int kk;//количество выбраных карт
+	int kk;//Д™Г®Г«ДЌГ·ДєЕ„Е€ГўГ® ГўЕ±ГЎД‘Е•Г­Е±Е‘ Д™Е•Д‘Е€
 	int qq;
 
 	bool yes = false;
@@ -273,61 +273,15 @@ bool game()
 	music[2].openFromFile("music/music3.ogg");
 	music[3].openFromFile("music/music4.ogg");
 	music[4].openFromFile("music/music5.ogg");
-	//music[1].play();
-	//	music[f].play();
-
-
-
-
-
-
+	
 	while (window.isOpen())
 	{
-		//Vector2i pos = Mouse::getPosition(window);
-
-		//if (Keyboard::isKeyPressed(Keyboard::P))
-		//{
-		//	RenderWindow window1(sf::VideoMode(700, 700), "kosinka");
-		//	menu(window1);//вызов меню
-		//}
-
-		//music[f].play();
-
-		//Event event1;
-		//if (event1.type == Event::MouseButtonPressed)
-		//{
-		//	press = true;
-		//}
-
-		//if (event1.type == Event::MouseButtonReleased && press == true)
-		//	if ((pos.x > 640) && (pos.y > 640))
-		//	{
-		//		music[f].stop();
-		//		f++;
-		//		if (f == 5)
-		//			f = 0;
-		//		press = false;
-		//		printf("%d", f);
-		//	}
-		//music[f].play();
-		//if (Keyboard::isKeyPressed(Keyboard::Tab))
-		//	tab = true;
-		//if (Keyboard::isKeyPressed(Keyboard::Q))// && tab)
-		//{
-		//	music[f].pause();
-		//	f++;
-		//	if (f == 4)
-		//		f = 0;
-		//	tab = false;
-		//	printf("%d", f);
-		//	music[f].play();
-		//}
 		Vector2i pos = Mouse::getPosition(window);
 		Event event;
 
 
 		window.clear(Color(0, 128, 0));
-		//создание пустых ячеек
+		//Е„Г®Г§Г¤Е•Г­ДЌДє ДЏГіЕ„Е€Е±Е‘ Л™Г·ДєДєД™
 		empty.setPosition(310, 10);
 		window.draw(empty);
 		empty.setPosition(410, 10);
@@ -351,7 +305,7 @@ bool game()
 		window.draw(empty);
 		empty.setPosition(610, 150);
 		window.draw(empty);
-		//рисовка начальной заготовки 
+		//Д‘ДЌЕ„Г®ГўД™Е• Г­Е•Г·Е•Г«ГјГ­Г®Г© Г§Е•ДѓГ®Е€Г®ГўД™ДЌ 
 		for (int i = 0; i < 24; i++)
 		{
 			for (int j = 0; j < 7; j++)
@@ -374,18 +328,9 @@ bool game()
 		}
 
 		music[f].play();
-
-		//	Event event;
-
+		
 		while (window.pollEvent(event))
 		{
-			/*
-			if (play)
-			music[f].play();
-			music[f].play();*/
-			//if (f != 0)
-			//	music[f - 1].stop();
-			//else music[4].stop();
 			if (event.type == Event::MouseButtonPressed)
 			{
 				press = true;
@@ -411,11 +356,6 @@ bool game()
 			if (event.type == Event::Closed)
 				window.close();
 
-			//	std::cout << pos.x << "\n";
-			//	std::cout << pos.y << "\n";
-
-
-
 			if (event.type == Event::MouseButtonPressed)
 			{
 				press = true;
@@ -432,21 +372,14 @@ bool game()
 					printf("%d", f);
 				}
 
-
-
-
-
-
-
-
 			for (int i = 0; i < 3; i++)
 			{
 				mooo[i] = false;
 			}
 
-			if (event.type == Event::MouseButtonPressed)//если нажата клавиша мыши
-				if (event.key.code == Mouse::Left)//а именно левая
-					if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y > 150))//и при этом координата курсора попадает в спрайт
+			if (event.type == Event::MouseButtonPressed)//ДєЕ„Г«ДЌ Г­Е•Д‡Е•Е€Е• Д™Г«Е•ГўДЌЕ™Е• Д›Е±Е™ДЌ
+				if (event.key.code == Mouse::Left)//Е• ДЌД›ДєГ­Г­Г® Г«ДєГўЕ•Л™
+					if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y > 150))//ДЌ ДЏД‘ДЌ ГЅЕ€Г®Д› Д™Г®Г®Д‘Г¤ДЌГ­Е•Е€Е• Д™ГіД‘Е„Г®Д‘Е• ДЏГ®ДЏЕ•Г¤Е•ДєЕ€ Гў Е„ДЏД‘Е•Г©Е€
 					{
 						b1 = pos.x / 100;
 						printf("%d", b1);
@@ -463,9 +396,9 @@ bool game()
 						{
 							if (pos.y > 136 + 24 * c1)
 							{
-								dX[1] = pos.x - st[c1 - 1][b1].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
-								dY[1] = pos.y - st[c1 - 1][b1].first.getPosition().y;//тоже самое по игреку
-								isMove = true;//можем двигать спрайт
+								dX[1] = pos.x - st[c1 - 1][b1].first.getPosition().x;//Г¤ДєГ«Е•ДєД› Д‘Е•Г§Г­Г®Е„Е€Гј Д›ДєД‡Г¤Гі ДЏГ®Г§ДЌГ¶ДЌДєГ© Д™ГіД‘Е„Г®Д‘Е• ДЌ Е„ДЏД‘Е•Г©Е€Е•.Г¤Г«Л™ Д™Г®Д‘Д‘ДєД™Е€ДЌД‘Г®ГўД™ДЌ Г­Е•Д‡Е•Е€ДЌЛ™
+								dY[1] = pos.y - st[c1 - 1][b1].first.getPosition().y;//Е€Г®Д‡Дє Е„Е•Д›Г®Дє ДЏГ® ДЌДѓД‘ДєД™Гі
+								isMove = true;//Д›Г®Д‡ДєД› Г¤ГўДЌДѓЕ•Е€Гј Е„ДЏД‘Е•Г©Е€
 								moved = false;
 								kk = 1;
 								sek = 1;
@@ -477,10 +410,10 @@ bool game()
 								{
 									for (int i = 0; i < kk; i++)
 									{
-										dX[i] = pos.x - st[c1 - 1 - i][b1].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
-										dY[i] = pos.y - st[c1 - 1 - i][b1].first.getPosition().y;//тоже самое по игреку
+										dX[i] = pos.x - st[c1 - 1 - i][b1].first.getPosition().x;//Г¤ДєГ«Е•ДєД› Д‘Е•Г§Г­Г®Е„Е€Гј Д›ДєД‡Г¤Гі ДЏГ®Г§ДЌГ¶ДЌДєГ© Д™ГіД‘Е„Г®Д‘Е• ДЌ Е„ДЏД‘Е•Г©Е€Е•.Г¤Г«Л™ Д™Г®Д‘Д‘ДєД™Е€ДЌД‘Г®ГўД™ДЌ Г­Е•Д‡Е•Е€ДЌЛ™
+										dY[i] = pos.y - st[c1 - 1 - i][b1].first.getPosition().y;//Е€Г®Д‡Дє Е„Е•Д›Г®Дє ДЏГ® ДЌДѓД‘ДєД™Гі
 									}
-									isMove = true;//можем двигать спрайт
+									isMove = true;//Д›Г®Д‡ДєД› Г¤ГўДЌДѓЕ•Е€Гј Е„ДЏД‘Е•Г©Е€
 									moved = false;
 									sek = 1;
 
@@ -490,28 +423,28 @@ bool game()
 					}
 					else if (tab)
 					{
-						if ((pos.x > 110) && (pos.x < 182) && (pos.y > 10) && (pos.y < 110))// && (a - p != 1))//и при этом координата курсора попадает в спрайт
+						if ((pos.x > 110) && (pos.x < 182) && (pos.y > 10) && (pos.y < 110))// && (a - p != 1))//ДЌ ДЏД‘ДЌ ГЅЕ€Г®Д› Д™Г®Г®Д‘Г¤ДЌГ­Е•Е€Е• Д™ГіД‘Е„Г®Д‘Е• ДЏГ®ДЏЕ•Г¤Е•ДєЕ€ Гў Е„ДЏД‘Е•Г©Е€
 						{
 
-							dX[1] = pos.x - kol[a].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
-							dY[1] = pos.y - kol[a].first.getPosition().y;//тоже самое по игреку
-							isMove = true;//можем двигать спрайт
+							dX[1] = pos.x - kol[a].first.getPosition().x;//Г¤ДєГ«Е•ДєД› Д‘Е•Г§Г­Г®Е„Е€Гј Д›ДєД‡Г¤Гі ДЏГ®Г§ДЌГ¶ДЌДєГ© Д™ГіД‘Е„Г®Д‘Е• ДЌ Е„ДЏД‘Е•Г©Е€Е•.Г¤Г«Л™ Д™Г®Д‘Д‘ДєД™Е€ДЌД‘Г®ГўД™ДЌ Г­Е•Д‡Е•Е€ДЌЛ™
+							dY[1] = pos.y - kol[a].first.getPosition().y;//Е€Г®Д‡Дє Е„Е•Д›Г®Дє ДЏГ® ДЌДѓД‘ДєД™Гі
+							isMove = true;//Д›Г®Д‡ДєД› Г¤ГўДЌДѓЕ•Е€Гј Е„ДЏД‘Е•Г©Е€
 							sek = 2;
 						}
 					}
-					else if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y < 110) && (pos.x > 310))//и при этом координата курсора попадает в спрайт
+					else if ((((pos.x - 9) / 100) == ((pos.x + 17) / 100)) && (pos.y < 110) && (pos.x > 310))//ДЌ ДЏД‘ДЌ ГЅЕ€Г®Д› Д™Г®Г®Д‘Г¤ДЌГ­Е•Е€Е• Д™ГіД‘Е„Г®Д‘Е• ДЏГ®ДЏЕ•Г¤Е•ДєЕ€ Гў Е„ДЏД‘Е•Г©Е€
 					{
 						qq = pos.x / 100;
-						dX[1] = pos.x - osn[c2][qq].first.getPosition().x;//делаем разность между позицией курсора и спрайта.для корректировки нажатия
-						dY[1] = pos.y - osn[c2][qq].first.getPosition().y;//тоже самое по игреку
-						isMove = true;//можем двигать спрайт
+						dX[1] = pos.x - osn[c2][qq].first.getPosition().x;//Г¤ДєГ«Е•ДєД› Д‘Е•Г§Г­Г®Е„Е€Гј Д›ДєД‡Г¤Гі ДЏГ®Г§ДЌГ¶ДЌДєГ© Д™ГіД‘Е„Г®Д‘Е• ДЌ Е„ДЏД‘Е•Г©Е€Е•.Г¤Г«Л™ Д™Г®Д‘Д‘ДєД™Е€ДЌД‘Г®ГўД™ДЌ Г­Е•Д‡Е•Е€ДЌЛ™
+						dY[1] = pos.y - osn[c2][qq].first.getPosition().y;//Е€Г®Д‡Дє Е„Е•Д›Г®Дє ДЏГ® ДЌДѓД‘ДєД™Гі
+						isMove = true;//Д›Г®Д‡ДєД› Г¤ГўДЌДѓЕ•Е€Гј Е„ДЏД‘Е•Г©Е€
 						sek = 3;
 					}
 
-					if (event.type == Event::MouseButtonReleased)//если отпустили клавишу
-						if (event.key.code == Mouse::Left) //а именно левую
+					if (event.type == Event::MouseButtonReleased)//ДєЕ„Г«ДЌ Г®Е€ДЏГіЕ„Е€ДЌГ«ДЌ Д™Г«Е•ГўДЌЕ™Гі
+						if (event.key.code == Mouse::Left) //Е• ДЌД›ДєГ­Г­Г® Г«ДєГўГіЕЈ
 						{
-							isMove = false; //то не можем двигать спрайт
+							isMove = false; //Е€Г® Г­Дє Д›Г®Д‡ДєД› Г¤ГўДЌДѓЕ•Е€Гј Е„ДЏД‘Е•Г©Е€
 							b2 = pos.x / 100;
 							if (sek == 1)
 							{
@@ -623,19 +556,19 @@ bool game()
 							}
 						}
 		}
-		if (isMove) {//если можем двигать
+		if (isMove) {//ДєЕ„Г«ДЌ Д›Г®Д‡ДєД› Г¤ГўДЌДѓЕ•Е€Гј
 			if (sek == 1)
 			{
 				if (kk == 1)
 				{
-					st[c1 - 1][b1].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//можно и так написать,если у вас нету х и у
+					st[c1 - 1][b1].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//Д›Г®Д‡Г­Г® ДЌ Е€Е•Д™ Г­Е•ДЏДЌЕ„Е•Е€Гј,ДєЕ„Г«ДЌ Гі ГўЕ•Е„ Г­ДєЕ€Гі Е‘ ДЌ Гі
 					window.draw(st[c1 - 1][b1].first);
 				}
 				else
 				{
 					for (int i = 0; i < kk; i++)
 					{
-						st[c1 - 1 - i][b1].first.setPosition(pos.x - dX[i], pos.y - dY[i]);//можно и так написать,если у вас нету х и у
+						st[c1 - 1 - i][b1].first.setPosition(pos.x - dX[i], pos.y - dY[i]);//Д›Г®Д‡Г­Г® ДЌ Е€Е•Д™ Г­Е•ДЏДЌЕ„Е•Е€Гј,ДєЕ„Г«ДЌ Гі ГўЕ•Е„ Г­ДєЕ€Гі Е‘ ДЌ Гі
 						window.draw(st[c1 - 1 - i][b1].first);
 					}
 				}
@@ -643,7 +576,7 @@ bool game()
 			if (sek == 2)
 			{
 				mooo[2] = true;
-				kol[a].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//можно и так написать,если у вас нету х и у
+				kol[a].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//Д›Г®Д‡Г­Г® ДЌ Е€Е•Д™ Г­Е•ДЏДЌЕ„Е•Е€Гј,ДєЕ„Г«ДЌ Гі ГўЕ•Е„ Г­ДєЕ€Гі Е‘ ДЌ Гі
 				window.draw(kol[a].first);
 			}
 			if (sek == 3)
@@ -663,7 +596,7 @@ bool game()
 		}
 
 
-		if (st[bb - 1][b1].second == shirt.second && bb != 0 && moved) //открывает карту вместо рубашки
+		if (st[bb - 1][b1].second == shirt.second && bb != 0 && moved) //Г®Е€Д™Д‘Е±ГўЕ•ДєЕ€ Д™Е•Д‘Е€Гі ГўД›ДєЕ„Е€Г® Д‘ГіГЎЕ•Е™Д™ДЌ
 		{
 			if (b1 == 1)
 				st[bb - 1][b1] = card[25];
@@ -695,39 +628,6 @@ bool game()
 				window.draw(st[i][j].first);
 			}
 		}
-
-
-
-		//if (isMove) {//если можем двигать
-		//	if (sek == 1)
-		//	{
-		//		if (kk == 1)
-		//		{
-		//			st[c1 - 1][b1].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//можно и так написать,если у вас нету х и у
-		//			window.draw(st[c1 - 1][b1].first);
-		//		}
-		//		else
-		//		{
-		//			for (int i = 0; i < kk; i++)
-		//			{
-		//				st[c1 - 1 - i][b1].first.setPosition(pos.x - dX[i], pos.y - dY[i]);//можно и так написать,если у вас нету х и у
-		//				window.draw(st[c1 - 1 - i][b1].first);
-		//			}
-		//		}
-		//	}
-		//	if (sek == 2)
-		//	{
-		//		mooo[2] = true;
-		//		kol[a].first.setPosition(pos.x - dX[1], pos.y - dY[1]);//можно и так написать,если у вас нету х и у
-		//		window.draw(kol[a].first);
-		//	}
-		//	if (sek == 3)
-		//	{
-		//		osn[c2][qq].first.setPosition(pos.x - dX[1], pos.y - dY[1]);
-		//		window.draw(osn[c2][qq].first);
-		//	}
-		//}
-
 
 		empty.setPosition(10, 10);
 		window.draw(empty);
